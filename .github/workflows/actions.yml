@@ -3,8 +3,19 @@ name: Actions Workflow
 #on: [push, pull_request]
 
 on:
-  repository_dispatch:
-    types: [build]
+  push:
+    branches:
+      - "develop"
+      - "feature/*"
+      - "!feature/featC"
+    #branches-ignore:
+    #  - "master"
+    #tags: 
+    #  - "v1.*"
+    #paths:
+    #  - "!**.js"
+  #repository_dispatch:
+    #types: [build]
   #schedule:
   #  - cron: "5 * * * *"
   #  - cron: "6 * * * *"
