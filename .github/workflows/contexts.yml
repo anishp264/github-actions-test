@@ -4,13 +4,24 @@ on: push
 jobs:
   dump_contexts_to_log:
     runs-on: ubuntu-latest
+    #refer github context dump to see this event
+    if: github.event_name == 'push'
     steps:
       - name: Dump GitHub context
         id: github_context_step
         run: echo '${{ toJSON(github) }}'
+      - name: Dump GitHub context Failure
+        id: github_context_step
+        run: ecco '${{ toJSON(github) }}'
+      - name: Dump job context on Failure
+        #this job runs if the above job is a failure
+        if: failure()
+        run: echo '${{ toJSON(job) }}'
       - name: Dump job context
         run: echo '${{ toJSON(job) }}'
       - name: Dump steps context
+        #this job always runs
+        if: always()
         run: echo '${{ toJSON(steps) }}'
       - name: Dump runner context
         run: echo '${{ toJSON(runner) }}'
