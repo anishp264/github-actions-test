@@ -1,0 +1,21 @@
+name: matrix
+on: push
+
+jobs:
+  node-version:
+    strategy:
+      matrix:
+        node-version: [6,7,8]
+      #if fail-fast set to true then the the subsequent versions don't execute if a version set up fails
+      fail-fast: false
+      #below line prevents parallel run
+      #max-parallel: 0
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log node version
+        run: node -v
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Log node version  
+        run: node -v
