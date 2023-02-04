@@ -8,11 +8,23 @@ jobs:
         #the jobs runs 9 times
         os: [macos-latest, ubuntu-latest, windows-latest]
         node-version: [6,7,8]
+        #include creates an extra variable for already existing configuration
+        include:
+          - os: ubuntu-latest
+            node_version: 8
+            is_ubuntu_8: "true"
+        exclude:
+          - os: ubuntu-latest
+            node-version: 6
+          - os: macos-latest
+            node-version: 8  
       #if fail-fast set to true then the the subsequent versions don't execute if a version set up fails
       fail-fast: false
       #below line prevents parallel run
       #max-parallel: 0
     runs-on: ${{ matrix.os }}
+    env:
+      IS_UBUNTU_8: ${{ matrix.is_ubuntu_8 }}
     steps:
       - name: Log node version
         run: node -v
@@ -20,4 +32,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Log node version  
-        run: node -v
+        run: |
+            node -v
+            echo $IS_UBUNTU_8
