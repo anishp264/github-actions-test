@@ -6,10 +6,14 @@ jobs:
     runs-on: ubuntu-latest 
     #refer github context dump to see this event   
     if: github.event_name == 'push'
+    timeout-minutes: 60
     steps:
       - name: Dump GitHub context Failure
         id: github_context_step
         run: ecco '${{ toJSON(github) }}'
+        timeout-minutes: 30
+        #the subsequent steps will runs even if this step fails
+        continue-on-error: true
       - name: Dump job context on Failure
         #this job runs if the above job is a failure
         if: failure()
