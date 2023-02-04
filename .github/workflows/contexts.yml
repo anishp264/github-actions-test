@@ -3,8 +3,7 @@ on: push
 
 jobs:
   dump_contexts_to_log:
-    runs-on: ubuntu-latest
-    #refer github context dump to see this event
+    runs-on: ubuntu-latest    
     if: github.event_name == 'push'
     steps:
       - name: Dump GitHub context
