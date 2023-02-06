@@ -20,6 +20,14 @@ jobs:
           #type -a node to get he below path, since yml no need for "" for path
           entrypoint: /usr/local/bin/node
           args: -v
+      #The files needs to be checked out since we have an executable script file
+      - uses: actions/checkout@v1
+      - name: Run a script
+        uses: docker://node:12.14.1-alpine3.10
+        with:
+          #using the script file, this script file shall be converted to an executable b4 committing using chmod command
+          entrypoint: ./script.sh
+          args: "some string"
   node-dockers:
     runs-on: ubuntu-latest
     services:
